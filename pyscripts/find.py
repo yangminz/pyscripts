@@ -1,18 +1,17 @@
 import re
 
 def find_value_by_key_from_text_lines(filename, searchkey):
+    # ~~ key
+    # value
     result = []
     with open(filename, "r", encoding="utf-8") as fr:
         content = fr.read()
-        keylines = re.finditer(r"(?<=\n\n)[^\n]+(?=\n)|^[^\n]+(?=\n)", content)
-        for match in keylines:
-            keyline = match.group()
-            if searchkey.lower() in keyline.lower():
-                # key found here
-                # match to next '\n\n' as end of value
-                key = match.group()
+        key_matches = re.finditer(r"(?<=\n\~\~)\s*(?P<key1>[^\n]+)(?=\n)|^\~\~\s*(?P<key2>[^\n]+)(?=\n)", content)
+        for match in key_matches:
+            key = "".join([x if x != None else "" for x in [match.group("key1"), match.group("key2")]])
+            if searchkey.lower() in key.lower():
                 valStartIndex = match.span()[1]
-                valueSpan = re.search(r".*(?=\n\n)", content[valStartIndex + 1:]).span()
-                value = content[valStartIndex + 1 : valueSpan[1] + valStartIndex + 1]
+                valueSpan = re.search(r".*(?=\~\~)", content[valStartIndex + 1:]).span()
+                value = content[valStartIndex + 1 : valueSpan[1] + valStartIndex + 1].rstrip("\n")
                 result += [(key, value)]
     return result
