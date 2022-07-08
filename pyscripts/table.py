@@ -2,7 +2,7 @@ def parse_csv_lines(lines, splitter=","):
     num_columns = len(lines[0].split(splitter))
     table = []
     for line in lines:
-        cells = line.split(splitter)
+        cells = [x.strip() for x in line.split(splitter)]
         assert(len(cells) == num_columns)
         table += [cells]
     return table
