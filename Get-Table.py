@@ -7,7 +7,7 @@ parser.add_argument('--content', type=str, default=None, help='The content of cs
 parser.add_argument('--splitter', type=str, default = ",", help='The column splitter')
 parser.add_argument('--cell_splitter', type=str, default = "|", help='The column splitter in table')
 parser.add_argument('--table_line', type=str, default = "-", help='The line in table')
-parser.add_argument('--line_splitter', type=str, default = "+", help='The line in table')
+parser.add_argument('--line_splitter', type=str, default = "|", help='The line in table')
 parser.add_argument('--padding', type=str, default = " ", help='The left/right padding inside a cell')
 args = parser.parse_args()
 
